@@ -7,8 +7,8 @@ pipeline {
        APP_NAME = "kamsu"
        STG_API_ENDPOINT = "http://ip10-0-1-3-cjfolbh79sugqdpn0vi0-1993.direct.docker.labs.eazytraining.fr"
        STG_APP_ENDPOINT = "http://ip10-0-1-3-cjfolbh79sugqdpn0vi0-80.direct.docker.labs.eazytraining.fr"
-       PROD_API_ENDPOINT = "http://ip10-0-1-4-cjfq00979sugqdpn0vlg-1993.direct.docker.labs.eazytraining.fr"
-       PROD_APP_ENDPOINT = "http://ip10-0-1-4-cjfq00979sugqdpn0vlg-80.direct.docker.labs.eazytraining.fr"
+       PROD_API_ENDPOINT = "http://ip10-0-1-4-cjfq00979sugqdpn0vlg-1993.direct.docker.labs.eazytraining.fr/"
+       PROD_APP_ENDPOINT = "http://ip10-0-1-4-cjfq00979sugqdpn0vlg-80.direct.docker.labs.eazytraining.fr/"
        INTERNAL_PORT = "5000"
        EXTERNAL_PORT = "${PORT_EXPOSED}"
        CONTAINER_IMAGE = "${ID_DOCKER}/${IMAGE_NAME}:${IMAGE_TAG}"
@@ -82,7 +82,23 @@ pipeline {
                '''
              }
           }
-      }    
+      }
+
+      stage('STAGING - Deploy app') {
+       when {
+              expression { GIT_BRANCH == 'origin/eazylabs' }
+            }
+      agent any
+      steps {
+          script {
+            sh """
+              echo  {\\"your_name\\":\\"${APP_NAME}\\",\\"container_image\\":\\"${CONTAINER_IMAGE}\\", \\"external_port\\":\\"${EXTERNAL_PORT}\\", \\"internal_port\\":\\"${INTERNAL_PORT}\\"}  > data.json 
+              curl -X POST http://${STG_API_ENDPOINT}/staging -H 'Content-Type: application/json'  --data-binary @data.json 
+            """
+          }
+        }
+     }
+
      
 
      stage('PRODUCTION - Deploy app') {
