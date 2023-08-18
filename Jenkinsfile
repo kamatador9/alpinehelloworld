@@ -68,7 +68,22 @@ pipeline {
                '''
              }
           }
-     }          
+     }
+     stage ('Login and Push Image on docker hub') {
+          agent any
+        environment {
+           DOCKERHUB_PASSWORD  = credentials('dockerhub-credentials')
+        }            
+          steps {
+             script {
+               sh '''
+                   echo $DOCKERHUB_PASSWORD_PSW | docker login -u $ID_DOCKER --password-stdin
+                   docker push ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
+               '''
+             }
+          }
+      }    
+     
 
      stage('PRODUCTION - Deploy app') {
        when {
