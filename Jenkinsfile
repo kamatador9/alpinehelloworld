@@ -5,10 +5,10 @@ pipeline {
        IMAGE_TAG = "latest"
        // PORT_EXPOSED = "80" à paraméter dans le job obligatoirement
        APP_NAME = "kamsu"
-       STG_API_ENDPOINT = "ip10-0-0-3-ckt9ig0db1j0qechj6jg-1993.direct.docker.labs.eazytraining.fr"
-       STG_APP_ENDPOINT = "ip10-0-0-3-ckt9ig0db1j0qechj6jg-80.direct.docker.labs.eazytraining.fr"
-       PROD_API_ENDPOINT = "ip10-0-0-4-ckt9ig0db1j0qechj6jg-1993.direct.docker.labs.eazytraining.fr"
-       PROD_APP_ENDPOINT = "ip10-0-0-4-ckt9ig0db1j0qechj6jg-80.direct.docker.labs.eazytraining.fr"
+       STG_API_ENDPOINT = "ip10-0-5-3-cktbn3gdb1j0qechj6rg-1993.direct.docker.labs.eazytraining.fr"
+       STG_APP_ENDPOINT = "ip10-0-5-3-cktbn3gdb1j0qechj6rg-80.direct.docker.labs.eazytraining.fr"
+       PROD_API_ENDPOINT = "ip10-0-5-4-cktbn3gdb1j0qechj6rg-1993.direct.docker.labs.eazytraining.fr
+       PROD_APP_ENDPOINT = "ip10-0-5-4-cktbn3gdb1j0qechj6rg-80.direct.docker.labs.eazytraining.fr"
        INTERNAL_PORT = "5000"
        EXTERNAL_PORT = "${PORT_EXPOSED}"
        CONTAINER_IMAGE = "${ID_DOCKER}/${IMAGE_NAME}:${IMAGE_TAG}"
